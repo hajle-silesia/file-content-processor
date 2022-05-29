@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-content-processor
+  labels:
+    app: file-content-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-content-processor
+  template:
+    metadata:
+      labels:
+        app: file-content-processor
+    spec:
+      containers:
+      - name: file-content-processor
+        image: mtweeman/hajle-silesia_file-content-processor:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-content-processor
+spec:
+  selector:
+    app: file-content-processor
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

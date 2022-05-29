@@ -1,1 +1,3 @@
-# file-content-processor
+### About
+This repository is responsible for:
+- processing dict recipe
