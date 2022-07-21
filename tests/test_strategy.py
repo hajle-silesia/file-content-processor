@@ -12,17 +12,23 @@ def customize_class_name(cls, parameter_number, params_dict):
     return f"{class_name}{class_subname}"
 
 
-@parameterized_class(('raw_content', 'strategy', 'expected_content', 'subname'),
-                     [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
-                      ({'USE': "test"}, UseStrategy(), {'USE': "test"}, "Use"),
-                      ({'AMOUNT': "0.23499"}, AmountHopsStrategy(), {'AMOUNT': 235}, "AmountHops"),
-                      ({'AMOUNT': "0.23499"}, AmountMiscsStrategy(), {'AMOUNT': 234.99}, "AmountMiscs"),
-                      ({'AMOUNT': "0.23499"}, AmountFermentablesStrategy(), {'AMOUNT': 0.23}, "AmountFermentables"),
-                      ({'TIME': "10"}, TimeStrategy(), {'TIME': datetime.timedelta(seconds=600)}, "Time"),
-                      ({'STEP_TIME': "10"}, MashStepTimeStrategy(), {'STEP_TIME': datetime.timedelta(seconds=600)},
-                       "MashStepTime"),
-                      ({'STEP_TEMP': "64.99"}, MashStepTempStrategy(), {'STEP_TEMP': 65}, "MastStepTemp"),
-                      ],
+class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
+                ({'USE': "test"}, UseStrategy(), {'USE': "test"}, "Use"),
+                ({'AMOUNT': "0.23499"}, AmountHopsStrategy(), {'AMOUNT': 235}, "AmountHops"),
+                ({'AMOUNT': "0.23499"}, AmountMiscsStrategy(), {'AMOUNT': 234.99}, "AmountMiscs"),
+                ({'AMOUNT': "0.23499"}, AmountFermentablesStrategy(), {'AMOUNT': 0.23}, "AmountFermentables"),
+                ({'TIME': "10"}, TimeStrategy(), {'TIME': datetime.timedelta(seconds=600)}, "Time"),
+                ({'STEP_TIME': "10"}, MashStepTimeStrategy(), {'STEP_TIME': datetime.timedelta(seconds=600)},
+                 "MashStepTime"),
+                ({'STEP_TEMP': "64.99"}, MashStepTempStrategy(), {'STEP_TEMP': 65}, "MastStepTemp"),
+                ]
+
+dummy_raw_content = {'dummy_key': "dummy_value"}
+for param in class_params:
+    param[0].update(dummy_raw_content)
+
+
+@parameterized_class(('raw_content', 'strategy', 'expected_content', 'subname'), class_params,
                      class_name_func=customize_class_name)
 class TestStrategy(unittest.TestCase):
     @classmethod
