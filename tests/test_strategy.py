@@ -1,4 +1,6 @@
+import json
 import unittest
+from pathlib import Path
 
 from parameterized import parameterized, parameterized_class
 
@@ -22,6 +24,31 @@ class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
                  "MashStepTime"),
                 ({'STEP_TEMP': "64.99"}, MashStepTempStrategy(), {'STEP_TEMP': 65}, "MastStepTemp"),
                 ]
+
+with open(Path(__file__).parent / "./files/strategy.json", encoding="utf-8") as parameters_raw_content_json:
+    parameters_raw_content = json.load(parameters_raw_content_json)
+parameters_expected_content = {'BATCH_NAME': 'NEIPA (Juicy Bits)',
+                               'BATCH_NUMBER': 93,
+                               'BATCH_VOLUME': 21.0,
+                               'BOIL_TIME': datetime.timedelta(seconds=3600),
+                               'BOIL_VOLUME': 27.58,
+                               'COOLING_SHRINKAGE_PERCENTAGE': 4.0,
+                               'EVAPORATION_PERCENTAGE': 1.81,
+                               'FERMENTATION_TEMP': 19.0,
+                               'GRAIN_TEMP': 22.2,
+                               'IBU': 34.3,
+                               'INFUSE_TEMP': 60.2,
+                               'INFUSE_VOLUME': 24.2,
+                               'KNOCKOUT_VOLUME': 26.0,
+                               'MLT_DEADSPACE_VOLUME': 15.9,
+                               'OG': 1.066,
+                               'POST_BOIL_VOLUME': 27.08,
+                               'PRE_BOIL_OG': 1.062,
+                               'SPARGE_VOLUME': 27.58,
+                               'TRUB_CHILLER_VOLUME': 5.0,
+                               'WATER_GRAIN_RATIO': 2.6,
+                               }
+class_params.append((parameters_raw_content, ParametersStrategy(), parameters_expected_content, "Parameters"))
 
 dummy_raw_content = {'dummy_key': "dummy_value"}
 for param in class_params:
