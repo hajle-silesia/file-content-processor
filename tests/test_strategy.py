@@ -18,7 +18,7 @@ class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
                 ({'USE': "test"}, UseStrategy(), {'USE': "test"}, "Use"),
                 ({'AMOUNT': "0.23499"}, AmountHopsStrategy(), {'AMOUNT': 235}, "AmountHops"),
                 ({'AMOUNT': "0.23499"}, AmountMiscsStrategy(), {'AMOUNT': 234.99}, "AmountMiscs"),
-                ({'AMOUNT': "0.23499"}, AmountFermentablesStrategy(), {'AMOUNT': 0.23}, "AmountFermentables"),
+                ({'AMOUNT': "0.23499"}, AmountFermentablesStrategy(), {'AMOUNT': 0.235}, "AmountFermentables"),
                 ({'TIME': "10"}, TimeStrategy(), {'TIME': datetime.timedelta(seconds=600)}, "Time"),
                 ({'STEP_TIME': "10"}, MashStepTimeStrategy(), {'STEP_TIME': datetime.timedelta(seconds=600)},
                  "MashStepTime"),
@@ -83,13 +83,13 @@ class TestStrategy(unittest.TestCase):
         super().tearDown()
 
     def test_Should_GetEmptyContent_When_GivenNoneContent(self):
-        self.assertEqual({}, self.strategy.execute(None))
+        self.assertEqual({}, self.strategy.process(None))
 
     def test_Should_GetEmptyContent_When_GivenEmptyContent(self):
-        self.assertEqual({}, self.strategy.execute({}))
+        self.assertEqual({}, self.strategy.process({}))
 
     def test_Should_GetContent_When_GivenNonemptyContent(self):
-        self.assertEqual(self.expected_content, self.strategy.execute(self.raw_content))
+        self.assertEqual(self.expected_content, self.strategy.process(self.raw_content))
 
 
 if __name__ == "__main__":

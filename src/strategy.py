@@ -4,57 +4,57 @@ from abc import ABC, abstractmethod
 
 class Strategy(ABC):
     @abstractmethod
-    def execute(self, raw_content):
+    def process(self, raw_content):
         return {}
 
 
 class NameStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'NAME': raw_content['NAME']} if raw_content else super().execute(raw_content)
+    def process(self, raw_content):
+        return {'NAME': raw_content['NAME']} if raw_content else super().process(raw_content)
 
 
 class UseStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'USE': raw_content['USE']} if raw_content else super().execute(raw_content)
+    def process(self, raw_content):
+        return {'USE': raw_content['USE']} if raw_content else super().process(raw_content)
 
 
 class AmountHopsStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'AMOUNT': int(round(1e3 * float(raw_content['AMOUNT']), 0))} if raw_content else super().execute(
+    def process(self, raw_content):
+        return {'AMOUNT': int(round(1e3 * float(raw_content['AMOUNT']), 0))} if raw_content else super().process(
             raw_content)
 
 
 class AmountMiscsStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'AMOUNT': round(1e3 * float(raw_content['AMOUNT']), 2)} if raw_content else super().execute(raw_content)
+    def process(self, raw_content):
+        return {'AMOUNT': round(1e3 * float(raw_content['AMOUNT']), 2)} if raw_content else super().process(raw_content)
 
 
 class AmountFermentablesStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'AMOUNT': round(float(raw_content['AMOUNT']), 2)} if raw_content else super().execute(raw_content)
+    def process(self, raw_content):
+        return {'AMOUNT': round(float(raw_content['AMOUNT']), 3)} if raw_content else super().process(raw_content)
 
 
 class TimeStrategy(Strategy):
-    def execute(self, raw_content):
+    def process(self, raw_content):
         return {
             'TIME': datetime.timedelta(
-                minutes=int(round(float(raw_content['TIME']), 0)))} if raw_content else super().execute(raw_content)
+                minutes=int(round(float(raw_content['TIME']), 0)))} if raw_content else super().process(raw_content)
 
 
 class MashStepTimeStrategy(Strategy):
-    def execute(self, raw_content):
+    def process(self, raw_content):
         return {'STEP_TIME': datetime.timedelta(
-            minutes=int(round(float(raw_content['STEP_TIME']), 0)))} if raw_content else super().execute(raw_content)
+            minutes=int(round(float(raw_content['STEP_TIME']), 0)))} if raw_content else super().process(raw_content)
 
 
 class MashStepTempStrategy(Strategy):
-    def execute(self, raw_content):
-        return {'STEP_TEMP': int(round(float(raw_content['STEP_TEMP']), 0))} if raw_content else super().execute(
+    def process(self, raw_content):
+        return {'STEP_TEMP': int(round(float(raw_content['STEP_TEMP']), 0))} if raw_content else super().process(
             raw_content)
 
 
 class ParametersStrategy(Strategy):
-    def execute(self, raw_content):
+    def process(self, raw_content):
         if raw_content:
             content = {}
             content['GRAIN_TEMP'] = round(float(raw_content['GRAIN_TEMP']), 2)
@@ -84,4 +84,4 @@ class ParametersStrategy(Strategy):
             content['BATCH_NAME'] = raw_content['NAME'].strip(raw_content['NAME'].split()[0] + ' ')
             return content
         else:
-            return super().execute(raw_content)
+            return super().process(raw_content)
