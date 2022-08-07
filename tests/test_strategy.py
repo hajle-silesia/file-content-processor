@@ -2,17 +2,10 @@ import json
 import unittest
 from pathlib import Path
 
-from parameterized import parameterized, parameterized_class
+from parameterized import parameterized_class
 
 from src.strategy import *
-
-
-def customize_class_name(cls, parameter_number, params_dict):
-    class_name = cls.__name__
-    class_subname = parameterized.to_safe_name(params_dict['subname'])
-
-    return f"{class_name}{class_subname}"
-
+from tests.utils import customize_class_name
 
 class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
                 ({'USE': "test"}, UseStrategy(), {'USE': "test"}, "Use"),

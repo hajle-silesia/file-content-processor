@@ -2,18 +2,11 @@ import json
 import unittest
 from pathlib import Path
 
-from parameterized import parameterized, parameterized_class
+from parameterized import parameterized_class
 
 from src.strategy_context import StrategyContext
 from src.strategy import *
-
-
-def customize_class_name(cls, parameter_number, params_dict):
-    class_name = cls.__name__
-    class_subname = parameterized.to_safe_name(params_dict['subname'])
-
-    return f"{class_name}{class_subname}"
-
+from tests.utils import customize_class_name
 
 with open(Path(__file__).parent / "./files/category_processor.json", encoding="utf-8") as category_processor_json:
     recipe = json.load(category_processor_json)

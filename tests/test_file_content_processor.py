@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from miscs import remove_file
+from utils import remove_file
 from src.file_content_processor import FileContentProcessor
 from src.notifier import Notifier
 from src.storage import Storage
