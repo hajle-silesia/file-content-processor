@@ -4,20 +4,16 @@ from abc import ABC
 class CategoryFilter(ABC):
     _category = ''
     _entry = ''
-
-    def __init__(self):
-        self._raw_content = None
+    _content_default = []
 
     def process(self, raw_content):
-        return {self._category: raw_content[self._category][self._entry]} if raw_content else {}
+        return raw_content[self._category][self._entry] if raw_content else self._content_default
 
 
 class RecipesFilter(CategoryFilter):
     _category = 'RECIPES'
     _entry = 'RECIPE'
-
-    def process(self, raw_content):
-        return raw_content[self._category][self._entry] if raw_content else {}
+    _content_default = {}
 
 
 class HopsFilter(CategoryFilter):
