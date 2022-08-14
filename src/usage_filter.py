@@ -25,5 +25,5 @@ class MiscsUsageFilter(UsageFilter):
 
     def __add_missing_usage_key(self, raw_content):
         for entry in raw_content:
-            if 'USE' not in entry:
+            if entry['USE'] is None:
                 entry['USE'] = "Sparge"

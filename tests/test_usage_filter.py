@@ -31,7 +31,7 @@ class TestUsageFilter(unittest.TestCase):
 
 class TestUsageFilterMiscsSpecial(unittest.TestCase):
     def test_Should_GetContent_When_GivenContentWithoutUSEKey(self):
-        raw_content = [{'entry_1_k': "entry_1_v"},
+        raw_content = [{'USE': None, 'entry_1_k': "entry_1_v"},
                        {'USE': "dummy_value", 'entry_2_k': "entry_2_v"},
                        ]
         expected_content = [{'USE': "Sparge", 'entry_1_k': "entry_1_v"}]
