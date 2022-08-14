@@ -12,6 +12,14 @@ class CategoryFilter(ABC):
         return {self._category: raw_content[self._category][self._entry]} if raw_content else {}
 
 
+class RecipesFilter(CategoryFilter):
+    _category = 'RECIPES'
+    _entry = 'RECIPE'
+
+    def process(self, raw_content):
+        return raw_content[self._category][self._entry] if raw_content else {}
+
+
 class HopsFilter(CategoryFilter):
     _category = 'HOPS'
     _entry = 'HOP'
