@@ -6,9 +6,14 @@ from pathlib import Path
 import requests
 from fastapi import FastAPI, Request
 
+from src.category_filter import *
 from src.file_content_processor import FileContentProcessor
 from src.notifier import Notifier
+from src.processor import Processor
 from src.storage import Storage
+from src.strategy import *
+from src.strategy_context import StrategyContext
+from src.usage_filter import *
 
 config_path = Path(__file__).parent / "../file_content_processor/config.json"
 
@@ -17,6 +22,37 @@ app = FastAPI()
 storage = Storage()
 storage.path = config_path
 notifier = Notifier(storage)
+
+hops_processor = Processor(recipe_filter=RecipesFilter(),
+                           category_filter=HopsFilter(),
+                           usage_filter=HopsUsageFilter(),
+                           strategy_context=StrategyContext(NameStrategy(),
+                                                            UseStrategy(),
+                                                            AmountHopsStrategy(),
+                                                            TimeStrategy()))
+miscs_processor = Processor(recipe_filter=RecipesFilter(),
+                            category_filter=MiscsFilter(),
+                            usage_filter=MiscsUsageFilter(),
+                            strategy_context=StrategyContext(NameStrategy(),
+                                                             UseStrategy(),
+                                                             AmountMiscsStrategy(),
+                                                             TimeStrategy()))
+fermentables_processor = Processor(recipe_filter=RecipesFilter(),
+                                   category_filter=FermentablesFilter(),
+                                   strategy_context=StrategyContext(NameStrategy(),
+                                                                    AmountFermentablesStrategy()))
+mash_steps_processor = Processor(recipe_filter=RecipesFilter(),
+                                 category_filter=MashStepsFilter(),
+                                 strategy_context=StrategyContext(NameStrategy(),
+                                                                  MashStepTimeStrategy(),
+                                                                  MashStepTempStrategy()))
+
+processors = {'hops': hops_processor,
+              'miscs': miscs_processor,
+              'fermentables': fermentables_processor,
+              'mash_steps': mash_steps_processor,
+              }
+
 file_content_processor = FileContentProcessor(notifier)
 
 notifier_host = os.getenv('FILE_CONTENT_CONVERTER_SERVICE_HOST')
