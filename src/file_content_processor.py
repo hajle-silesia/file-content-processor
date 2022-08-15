@@ -1,13 +1,16 @@
 import threading
 
+from copy import deepcopy
+
 
 class FileContentProcessor(threading.Thread):
     _content_default = {}
 
-    def __init__(self, notifier):
+    def __init__(self, notifier, processors):
         threading.Thread.__init__(self, daemon=True)
 
         self.__notifier = notifier
+        self.__processors = processors
         self.__raw_content = self._content_default
         self.__content = self._content_default
 
@@ -26,14 +29,9 @@ class FileContentProcessor(threading.Thread):
 
     def __process_raw_content(self):
         if self.__raw_content:
-            self.__content = self.__raw_content
-            # converter = self.__create_converter(file_type_header)
-            #
-            # if converter:
-            #     converter.process(self.__raw_content)
-            #     self.__content = converter.content
-            # else:
-            #     self.__content = self.__raw_content
+            self.__content = deepcopy(self._content_default)
+            for processor_name, processor in self.__processors.items():
+                self.__content.update({processor_name: processor.process(self.__raw_content)})
 
     def __notify(self):
         if self.content:
