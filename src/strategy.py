@@ -59,10 +59,11 @@ class ParametersStrategy(Strategy):
             content = {}
             content['GRAIN_TEMP'] = round(float(raw_content['GRAIN_TEMP']), 2)
             content['WATER_GRAIN_RATIO'] = round(
-                float(raw_content['MASH_STEPS'][0]['WATER_GRAIN_RATIO'].split()[0].replace(',', '.')), 1)
+                float(raw_content['MASH_STEPS']['MASH_STEP'][0]['WATER_GRAIN_RATIO'].split()[0].replace(',', '.')), 1)
             content['INFUSE_VOLUME'] = round(
-                float(raw_content['MASH_STEPS'][0]['DISPLAY_INFUSE_AMT'].split()[0]), 2)
-            content['INFUSE_TEMP'] = round(float(raw_content['MASH_STEPS'][0]['INFUSE_TEMP'].split()[0]), 1)
+                float(raw_content['MASH_STEPS']['MASH_STEP'][0]['DISPLAY_INFUSE_AMT'].split()[0]), 2)
+            content['INFUSE_TEMP'] = round(float(raw_content['MASH_STEPS']['MASH_STEP'][0]['INFUSE_TEMP'].split()[0]),
+                                           1)
             content['MLT_DEADSPACE_VOLUME'] = round(float(raw_content['MLT_DEADSPACE_VOLUME']), 2)
             content['SPARGE_VOLUME'] = round(float(raw_content['SPARGE_VOLUME'].split()[0]), 2)
             content['BOIL_VOLUME'] = round(float(raw_content['BOIL_VOLUME']), 2)
