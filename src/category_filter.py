@@ -34,3 +34,8 @@ class FermentablesFilter(CategoryFilter):
 class MashStepsFilter(CategoryFilter):
     _category = 'MASH_STEPS'
     _entry = 'MASH_STEP'
+
+
+class ParametersFilter(CategoryFilter):
+    def process(self, raw_content):
+        return [raw_content] if raw_content else self._content_default

@@ -31,7 +31,10 @@ class FileContentProcessor(threading.Thread):
         if self.__raw_content:
             self.__content = deepcopy(self._content_default)
             for processor_name, processor in self.__processors.items():
-                self.__content.update({processor_name: processor.process(self.__raw_content)})
+                if processor_name == 'parameters':
+                    self.__content.update({processor_name: processor.process(self.__raw_content)[0]})
+                else:
+                    self.__content.update({processor_name: processor.process(self.__raw_content)})
 
     def __notify(self):
         if self.content:

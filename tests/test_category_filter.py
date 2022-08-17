@@ -10,6 +10,7 @@ class_params = [('RECIPES', 'RECIPE', RecipesFilter(), {}, "Recipes"),
                 ('MISCS', 'MISC', MiscsFilter(), [], 'Miscs'),
                 ('FERMENTABLES', 'FERMENTABLE', FermentablesFilter(), [], "Fermentables"),
                 ('MASH_STEPS', 'MASH_STEP', MashStepsFilter(), [], "MashSteps"),
+                ('CATEGORY', 'ENTRY', ParametersFilter(), [], "Parameters"),
                 ]
 
 
@@ -23,7 +24,10 @@ class TestCategoryFilter(unittest.TestCase):
         raw_content = {self.category: {self.entry: [{'entry_1_k': "entry_1_v"}, {'entry_2_k': "entry_2_v"}]},
                        'dummy_key': "dummy_value",
                        }
-        expected_content = [{'entry_1_k': "entry_1_v"}, {'entry_2_k': "entry_2_v"}]
+        if self.subname == "Parameters":
+            expected_content = [raw_content]
+        else:
+            expected_content = [{'entry_1_k': "entry_1_v"}, {'entry_2_k': "entry_2_v"}]
         self.assertEqual(expected_content, self.category_filter.process(raw_content))
 
 

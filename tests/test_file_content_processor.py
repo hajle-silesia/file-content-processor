@@ -75,11 +75,15 @@ class TestFileContentProcessor(unittest.TestCase):
                                          strategy_context=StrategyContext(NameStrategy(),
                                                                           MashStepTimeStrategy(),
                                                                           MashStepTempStrategy()))
+        parameters_processor = Processor(recipe_filter=RecipesFilter(),
+                                         category_filter=ParametersFilter(),
+                                         strategy_context=StrategyContext(ParametersStrategy()))
 
         cls.processors = {'hops': hops_processor,
                           'miscs': miscs_processor,
                           'fermentables': fermentables_processor,
                           'mash_steps': mash_steps_processor,
+                          'parameters': parameters_processor,
                           }
 
     @classmethod
