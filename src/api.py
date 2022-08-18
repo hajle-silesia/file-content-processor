@@ -23,13 +23,6 @@ storage = Storage()
 storage.path = config_path
 notifier = Notifier(storage)
 
-hops_processor = Processor(recipe_filter=RecipesFilter(),
-                           category_filter=HopsFilter(),
-                           usage_filter=HopsUsageFilter(),
-                           strategy_context=StrategyContext(NameStrategy(),
-                                                            UseStrategy(),
-                                                            AmountHopsStrategy(),
-                                                            TimeStrategy()))
 miscs_processor = Processor(recipe_filter=RecipesFilter(),
                             category_filter=MiscsFilter(),
                             usage_filter=MiscsUsageFilter(),
@@ -46,14 +39,25 @@ mash_steps_processor = Processor(recipe_filter=RecipesFilter(),
                                  strategy_context=StrategyContext(NameStrategy(),
                                                                   MashStepTimeStrategy(),
                                                                   MashStepTempStrategy()))
+hops_processor = Processor(recipe_filter=RecipesFilter(),
+                           category_filter=HopsFilter(),
+                           usage_filter=HopsUsageFilter(),
+                           strategy_context=StrategyContext(NameStrategy(),
+                                                            UseStrategy(),
+                                                            AmountHopsStrategy(),
+                                                            TimeStrategy()))
+parameters_processor = Processor(recipe_filter=RecipesFilter(),
+                                         category_filter=ParametersFilter(),
+                                         strategy_context=StrategyContext(ParametersStrategy()))
 
-processors = {'hops': hops_processor,
-              'miscs': miscs_processor,
+processors = {'miscs': miscs_processor,
               'fermentables': fermentables_processor,
               'mash_steps': mash_steps_processor,
+              'hops': hops_processor,
+              'parameters': parameters_processor,
               }
 
-file_content_processor = FileContentProcessor(notifier)
+file_content_processor = FileContentProcessor(notifier=notifier, processors=processors)
 
 notifier_host = os.getenv('FILE_CONTENT_CONVERTER_SERVICE_HOST')
 notifier_port = os.getenv('FILE_CONTENT_CONVERTER_SERVICE_PORT')
