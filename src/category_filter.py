@@ -7,7 +7,7 @@ class CategoryFilter(ABC):
     _content_default = []
 
     def process(self, raw_content):
-        return raw_content[self._category][self._entry] if raw_content else self._content_default
+        return raw_content[self._category][self._entry] if raw_content.get(self._category) else self._content_default
 
 
 class RecipesFilter(CategoryFilter):
