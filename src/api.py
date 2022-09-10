@@ -47,8 +47,8 @@ hops_processor = Processor(recipe_filter=RecipesFilter(),
                                                             AmountHopsStrategy(),
                                                             TimeStrategy()))
 parameters_processor = Processor(recipe_filter=RecipesFilter(),
-                                         category_filter=ParametersFilter(),
-                                         strategy_context=StrategyContext(ParametersStrategy()))
+                                 category_filter=ParametersFilter(),
+                                 strategy_context=StrategyContext(ParametersStrategy()))
 
 processors = {'miscs': miscs_processor,
               'fermentables': fermentables_processor,
