@@ -18,7 +18,7 @@ class_params = [("Boil", HopsUsageFilter(), "HopsBoil"),
 @parameterized_class(('usage', 'usage_filter', 'subname'), class_params, class_name_func=customize_class_name)
 class TestUsageFilter(unittest.TestCase):
     def test_Should_GetEmptyContent_When_GivenEmptyContent(self):
-        self.assertEqual([], self.usage_filter.process({}))
+        self.assertEqual([], self.usage_filter.process([]))
 
     def test_Should_GetContent_When_GivenNonemptyContent(self):
         raw_content = [{'USE': self.usage, 'entry_1_k': "entry_1_v"},

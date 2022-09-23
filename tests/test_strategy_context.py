@@ -66,7 +66,7 @@ class TestStrategyContext(unittest.TestCase):
             cls.recipe = json.load(strategy_context_json)
 
     def test_Should_ReturnEmptyValue_When_GivenEmptyContent(self):
-        self.assertEqual([], self.strategy_context.process({}))
+        self.assertEqual([], self.strategy_context.process([]))
 
     def test_Should_ReturnNonemptyValue_When_GivenNonemptyContent(self):
         self.assertEqual(self.expected_return_value, self.strategy_context.process(self.recipe[self.category]))
@@ -81,7 +81,7 @@ class TestStrategyContextParameters(unittest.TestCase):
                                                )
 
     def test_Should_ReturnEmptyValue_When_GivenEmptyContent(self):
-        self.assertEqual([], self.strategy_context.process({}))
+        self.assertEqual([], self.strategy_context.process([]))
 
     def test_Should_ReturnNonemptyValue_When_GivenNonemptyContent(self):
         with open(Path(__file__).parent / "./files/strategy_context_parameters.json",
