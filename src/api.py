@@ -10,6 +10,7 @@ from src.category_filter import *
 from src.file_content_processor import FileContentProcessor
 from src.notifier import Notifier
 from src.processor import Processor
+from src.sorter import *
 from src.storage import Storage
 from src.strategy import *
 from src.strategy_context import StrategyContext
@@ -38,7 +39,8 @@ mash_steps_processor = Processor(recipe_filter=RecipesFilter(),
                                  category_filter=MashStepsFilter(),
                                  strategy_context=StrategyContext(NameStrategy(),
                                                                   MashStepTimeStrategy(),
-                                                                  MashStepTempStrategy()))
+                                                                  MashStepTempStrategy()),
+                                 sorter=MashStepsSorter())
 hops_processor = Processor(recipe_filter=RecipesFilter(),
                            category_filter=HopsFilter(),
                            usage_filter=HopsUsageFilter(),
