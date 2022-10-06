@@ -72,6 +72,11 @@ url = f"http://{host}:{port}/update"
 requests.post(notifier_url, base64.b64encode(json.dumps({'file-content-processor': url}).encode()))
 
 
+@app.get("/healthz")
+async def healthz():
+    return {'status': "ok"}
+
+
 @app.get("/api")
 async def api():
     return {"/content",
