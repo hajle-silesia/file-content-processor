@@ -1,9 +1,9 @@
+import abc
 import datetime
-from abc import ABC, abstractmethod
 
 
-class Strategy(ABC):
-    @abstractmethod
+class Strategy(abc.ABC):
+    @abc.abstractmethod
     def process(self, raw_content):
         return {}
 

@@ -1,11 +1,11 @@
 import json
+import pathlib
 import unittest
-from pathlib import Path
 
-from parameterized import parameterized_class
+import common.utils
+import parameterized
 
 from src.strategy import *
-from tests.utils import customize_class_name
 
 class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
                 ({'USE': "test"}, UseStrategy(), {'USE': "test"}, "Use"),
@@ -18,7 +18,7 @@ class_params = [({'NAME': "test"}, NameStrategy(), {'NAME': "test"}, "Name"),
                 ({'STEP_TEMP': "64.99"}, MashStepTempStrategy(), {'STEP_TEMP': 65}, "MastStepTemp"),
                 ]
 
-with open(Path(__file__).parent / "./files/strategy.json", encoding="utf-8") as parameters_raw_content_json:
+with open(pathlib.Path(__file__).parent / "./files/strategy.json", encoding="utf-8") as parameters_raw_content_json:
     parameters_raw_content = json.load(parameters_raw_content_json)
 parameters_expected_content = {'BATCH_NAME': 'NEIPA (Juicy Bits)',
                                'BATCH_NUMBER': 93,
@@ -48,8 +48,8 @@ for param in class_params:
     param[0].update(dummy_raw_content)
 
 
-@parameterized_class(('raw_content', 'strategy', 'expected_content', 'subname'), class_params,
-                     class_name_func=customize_class_name)
+@parameterized.parameterized_class(('raw_content', 'strategy', 'expected_content', 'subname'), class_params,
+                                   class_name_func=common.utils.customize_class_name)
 class TestStrategy(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

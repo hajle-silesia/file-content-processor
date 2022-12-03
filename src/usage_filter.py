@@ -1,7 +1,7 @@
-from abc import ABC
+import abc
 
 
-class UsageFilter(ABC):
+class UsageFilter(abc.ABC):
     _usage = []
 
     def process(self, raw_content):

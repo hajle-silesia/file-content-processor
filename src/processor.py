@@ -1,7 +1,7 @@
-from abc import ABC
+import abc
 
 
-class Processor(ABC):
+class Processor(abc.ABC):
     def __init__(self, recipe_filter, category_filter, usage_filter=None, strategy_context=None, sorter=None):
         self._recipe_filter = recipe_filter
         self._category_filter = category_filter

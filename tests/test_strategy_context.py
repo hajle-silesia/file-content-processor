@@ -1,12 +1,12 @@
 import json
+import pathlib
 import unittest
-from pathlib import Path
 
-from parameterized import parameterized_class
+import common.utils
+import parameterized
 
 from src.strategy import *
 from src.strategy_context import StrategyContext
-from tests.utils import customize_class_name
 
 class_params = [('HOPS', StrategyContext(NameStrategy(),
                                          UseStrategy(),
@@ -55,14 +55,15 @@ class_params = [('HOPS', StrategyContext(NameStrategy(),
                 ]
 
 
-@parameterized_class(('category', 'strategy_context', 'expected_return_value', 'subname'), class_params,
-                     class_name_func=customize_class_name)
+@parameterized.parameterized_class(('category', 'strategy_context', 'expected_return_value', 'subname'), class_params,
+                                   class_name_func=common.utils.customize_class_name)
 class TestStrategyContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
-        with open(Path(__file__).parent / "./files/strategy_context.json", encoding="utf-8") as strategy_context_json:
+        with open(pathlib.Path(__file__).parent / "./files/strategy_context.json",
+                  encoding="utf-8") as strategy_context_json:
             cls.recipe = json.load(strategy_context_json)
 
     def test_Should_ReturnEmptyValue_When_GivenEmptyContent(self):
@@ -84,7 +85,7 @@ class TestStrategyContextParameters(unittest.TestCase):
         self.assertEqual([], self.strategy_context.process([]))
 
     def test_Should_ReturnNonemptyValue_When_GivenNonemptyContent(self):
-        with open(Path(__file__).parent / "./files/strategy_context_parameters.json",
+        with open(pathlib.Path(__file__).parent / "./files/strategy_context_parameters.json",
                   encoding="utf-8") as strategy_context_parameters_json:
             recipe = json.load(strategy_context_parameters_json)
 

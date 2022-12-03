@@ -1,11 +1,11 @@
+import abc
 import re
-from abc import ABC, abstractmethod
 
 
-class Sorter(ABC):
+class Sorter(abc.ABC):
     _order = {}
 
-    @abstractmethod
+    @abc.abstractmethod
     def process(self, raw_content):
         pass
 

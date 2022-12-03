@@ -1,17 +1,17 @@
 import json
+import pathlib
 import unittest
-from pathlib import Path
 
-from parameterized import parameterized_class
+import common.utils
+import parameterized
 
 from src.category_filter import *
 from src.processor import Processor
 from src.strategy import *
 from src.strategy_context import StrategyContext
 from src.usage_filter import *
-from tests.utils import customize_class_name
 
-with open(Path(__file__).parent / "./files/processor.json", encoding="utf-8") as processor_json:
+with open(pathlib.Path(__file__).parent / "./files/processor.json", encoding="utf-8") as processor_json:
     recipe = json.load(processor_json)
 
 class_params = [(Processor(recipe_filter=RecipesFilter(),
@@ -108,8 +108,8 @@ class_params = [(Processor(recipe_filter=RecipesFilter(),
                 ]
 
 
-@parameterized_class(('processor', 'expected_return_value', 'subname'), class_params,
-                     class_name_func=customize_class_name)
+@parameterized.parameterized_class(('processor', 'expected_return_value', 'subname'), class_params,
+                                   class_name_func=common.utils.customize_class_name)
 class TestProcessor(unittest.TestCase):
     def test_Should_ReturnEmptyValue_When_GivenEmptyContent(self):
         self.assertEqual([], self.processor.process({}))

@@ -1,9 +1,9 @@
 import unittest
 
-from parameterized import parameterized_class
+import common.utils
+import parameterized
 
 from src.category_filter import *
-from tests.utils import customize_class_name
 
 class_params = [('RECIPES', 'RECIPE', RecipesFilter(), {}, "Recipes"),
                 ('HOPS', 'HOP', HopsFilter(), [], "Hops"),
@@ -14,8 +14,8 @@ class_params = [('RECIPES', 'RECIPE', RecipesFilter(), {}, "Recipes"),
                 ]
 
 
-@parameterized_class(('category', 'entry', 'category_filter', 'expected_return_value', 'subname'), class_params,
-                     class_name_func=customize_class_name)
+@parameterized.parameterized_class(('category', 'entry', 'category_filter', 'expected_return_value', 'subname'),
+                                   class_params, class_name_func=common.utils.customize_class_name)
 class TestCategoryFilter(unittest.TestCase):
     def test_Should_GetEmptyContent_When_GivenEmptyContent(self):
         self.assertEqual(self.expected_return_value, self.category_filter.process({}))

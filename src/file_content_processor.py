@@ -1,6 +1,5 @@
+import copy
 import threading
-
-from copy import deepcopy
 
 
 class FileContentProcessor(threading.Thread):
@@ -29,7 +28,7 @@ class FileContentProcessor(threading.Thread):
 
     def __process_raw_content(self):
         if self.__raw_content:
-            self.__content = deepcopy(self._content_default)
+            self.__content = copy.deepcopy(self._content_default)
             for processor_name, processor in self.__processors.items():
                 if processor_name == 'parameters':
                     self.__content.update({processor_name: processor.process(self.__raw_content)[0]})

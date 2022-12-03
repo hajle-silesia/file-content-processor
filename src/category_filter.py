@@ -1,7 +1,7 @@
-from abc import ABC
+import abc
 
 
-class CategoryFilter(ABC):
+class CategoryFilter(abc.ABC):
     _category = ''
     _entry = ''
     _content_default = []

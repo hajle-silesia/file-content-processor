@@ -1,22 +1,22 @@
 import json
-import unittest
-from pathlib import Path
-from unittest import mock
+import pathlib
+import unittest.mock
+
+import common.notifier
+import common.storage
+import common.utils
 
 from src.category_filter import *
 from src.file_content_processor import FileContentProcessor
-from src.notifier import Notifier
 from src.processor import Processor
-from src.storage import Storage
 from src.strategy import *
 from src.strategy_context import StrategyContext
 from src.usage_filter import *
-from utils import remove_file
 
-with open(Path(__file__).parent / "./files/file_content_processor.json",
+with open(pathlib.Path(__file__).parent / "./files/file_content_processor.json",
           encoding="utf-8") as file_content_processor_json:
     recipe = json.load(file_content_processor_json)
-with open(Path(__file__).parent / "./files/file_content_processor_return_value.json",
+with open(pathlib.Path(__file__).parent / "./files/file_content_processor_return_value.json",
           encoding="utf-8") as file_content_processor_return_value_json:
     expected_return_value = json.load(file_content_processor_return_value_json)
 
@@ -38,7 +38,7 @@ def mocked_requests_post(*args, **kwargs):
         return MockResponse(None, 404)
 
 
-@mock.patch("src.notifier.requests.post", side_effect=mocked_requests_post)
+@unittest.mock.patch("common.notifier.requests.post", side_effect=mocked_requests_post)
 class TestFileContentProcessor(unittest.TestCase):
     storage = None
     storage_path = None
@@ -46,10 +46,10 @@ class TestFileContentProcessor(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.storage = Storage()
-        cls.storage_path = Path(__file__).parent / "./data.json"
+        cls.storage = common.storage.Storage()
+        cls.storage_path = pathlib.Path(__file__).parent / "./data.json"
         cls.storage.path = cls.storage_path
-        cls.notifier = Notifier(cls.storage)
+        cls.notifier = common.notifier.Notifier(cls.storage)
         cls.notifier.register_observer(url)
 
         hops_processor = Processor(recipe_filter=RecipesFilter(),
@@ -90,7 +90,7 @@ class TestFileContentProcessor(unittest.TestCase):
     def tearDownClass(cls):
         super().tearDownClass()
 
-        remove_file(cls.storage_path)
+        common.utils.remove_file(cls.storage_path)
 
     def setUp(self):
         super().setUp()

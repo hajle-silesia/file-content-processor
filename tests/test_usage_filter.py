@@ -1,9 +1,9 @@
 import unittest
 
-from parameterized import parameterized_class
+import common.utils
+import parameterized
 
 from src.usage_filter import *
-from tests.utils import customize_class_name
 
 class_params = [("Boil", HopsUsageFilter(), "HopsBoil"),
                 ("Aroma", HopsUsageFilter(), "HopsDryHop"),
@@ -15,7 +15,8 @@ class_params = [("Boil", HopsUsageFilter(), "HopsBoil"),
                 ]
 
 
-@parameterized_class(('usage', 'usage_filter', 'subname'), class_params, class_name_func=customize_class_name)
+@parameterized.parameterized_class(('usage', 'usage_filter', 'subname'), class_params,
+                                   class_name_func=common.utils.customize_class_name)
 class TestUsageFilter(unittest.TestCase):
     def test_Should_GetEmptyContent_When_GivenEmptyContent(self):
         self.assertEqual([], self.usage_filter.process([]))
