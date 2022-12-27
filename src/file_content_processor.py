@@ -1,14 +1,11 @@
 import copy
-import threading
 
 
-class FileContentProcessor(threading.Thread):
+class FileContentProcessor:
     _content_default = {}
 
-    def __init__(self, notifier, processors):
-        threading.Thread.__init__(self, daemon=True)
-
-        self.__notifier = notifier
+    def __init__(self, producer, processors):
+        self.__producer = producer
         self.__processors = processors
         self.__raw_content = self._content_default
         self.__content = self._content_default
@@ -18,10 +15,9 @@ class FileContentProcessor(threading.Thread):
         return self.__content
 
     def update(self, new_raw_content):
-        if new_raw_content:
-            self.__update_raw_content(new_raw_content)
-            self.__process_raw_content()
-            self.__notify()
+        self.__update_raw_content(new_raw_content)
+        self.__process_raw_content()
+        self.__notify()
 
     def __update_raw_content(self, new_raw_content):
         self.__raw_content = new_raw_content
@@ -37,4 +33,6 @@ class FileContentProcessor(threading.Thread):
 
     def __notify(self):
         if self.content:
-            self.__notifier.notify_observers(self.content)
+            self.__producer.send(topic="file-content-processor-topic",
+                                 value=self.content,
+                                 )
