@@ -2,4 +2,5 @@ fastapi
 uvicorn
 requests
 parameterized
-git+https://github.com/hajle-silesia/common.git
+https://github.com/hajle-silesia/common/zipball/master
+kafka-python
