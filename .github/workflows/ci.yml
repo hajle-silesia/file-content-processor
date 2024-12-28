@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - "v*.*.*"
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -39,7 +42,7 @@ jobs:
     needs:
       - test
     name: Build
-    uses: hajle-silesia/.github/.github/workflows/shared-image-build.yaml@v2.2.1
+    uses: hajle-silesia/.github/.github/workflows/shared-image-build.yaml@v2.4.0
     with:
       docker-hub-username: ${{ vars.DOCKER_HUB_USERNAME }}
       docker-hub-namespace: ${{ vars.DOCKER_HUB_NAMESPACE }}
@@ -50,7 +53,7 @@ jobs:
     needs:
       - build
     name: Chart update
-    uses: hajle-silesia/.github/.github/workflows/shared-chart-update.yaml@v2.2.1
+    uses: hajle-silesia/.github/.github/workflows/shared-chart-update.yaml@v2.4.0
     with:
       docker-hub-image-repository-name: ${{ needs.build.outputs.docker-hub-repository-name }}
       image-tag: ${{ needs.build.outputs.tag }}
