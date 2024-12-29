@@ -38,10 +38,10 @@ jobs:
       - name: Code test coverage with coverage
         run: coverage report -m
 
-  build:
+  image-build:
     needs:
       - test
-    name: Build
+    name: Image build
     uses: hajle-silesia/.github/.github/workflows/shared-image-build.yaml@v2.4.0
     with:
       docker-hub-username: ${{ vars.DOCKER_HUB_USERNAME }}
@@ -51,7 +51,7 @@ jobs:
 
   chart-update:
     needs:
-      - build
+      - image-build
     name: Chart update
     uses: hajle-silesia/.github/.github/workflows/shared-chart-update.yaml@v2.4.0
     with:
