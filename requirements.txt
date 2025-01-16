@@ -3,4 +3,4 @@ uvicorn
 requests
 parameterized
 https://github.com/hajle-silesia/common/zipball/master
-kafka-python
+kafka-python-ng
