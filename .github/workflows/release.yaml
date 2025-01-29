@@ -9,6 +9,6 @@ on:
 jobs:
   release:
     name: Release
-    uses: hajle-silesia/.github/.github/workflows/shared-release.yaml@v2.4.1
+    uses: hajle-silesia/.github/.github/workflows/shared-release.yaml@v2.5.0
     secrets:
       token: ${{ secrets.PUSH_TOKEN }}
