@@ -1,4 +1,4 @@
-FROM python:3.13.1
+FROM python:3.13.2
 RUN apt update && apt install -y \
     curl
 WORKDIR project
