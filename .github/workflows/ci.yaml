@@ -42,7 +42,7 @@ jobs:
     needs:
       - test
     name: Image build
-    uses: hajle-silesia/.github/.github/workflows/shared-image-build.yaml@v2.5.0
+    uses: hajle-silesia/.github/.github/workflows/shared-image-build.yaml@v2.6.1
     with:
       docker-hub-username: ${{ vars.DOCKER_HUB_USERNAME }}
       docker-hub-namespace: ${{ vars.DOCKER_HUB_NAMESPACE }}
@@ -53,7 +53,7 @@ jobs:
     needs:
       - image-build
     name: Chart update
-    uses: hajle-silesia/.github/.github/workflows/shared-chart-update.yaml@v2.5.0
+    uses: hajle-silesia/.github/.github/workflows/shared-chart-update.yaml@v2.6.1
     with:
       docker-hub-image-repository-name: ${{ needs.image-build.outputs.docker-hub-repository-name }}
       image-tag: ${{ needs.image-build.outputs.tag }}
