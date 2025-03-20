@@ -1,7 +1,4 @@
-import abc
-
-
-class Processor(abc.ABC):
+class Processor:
     def __init__(self, recipe_filter, category_filter, usage_filter=None, strategy_context=None, sorter=None):
         self._recipe_filter = recipe_filter
         self._category_filter = category_filter
@@ -14,8 +11,7 @@ class Processor(abc.ABC):
         category_filtered_content = self._filter_category(recipe_filtered_content)
         usage_filtered_content = self._filter_usage(category_filtered_content)
         strategy_context_processed_content = self._process_context_strategy(usage_filtered_content)
-        sorted_content = self._sort(strategy_context_processed_content)
-        return sorted_content
+        return self._sort(strategy_context_processed_content)
 
     def _filter_recipe(self, raw_content):
         return self._recipe_filter.process(raw_content)

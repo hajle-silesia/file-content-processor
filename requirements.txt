@@ -1,6 +1,6 @@
-fastapi
-uvicorn
-requests
-parameterized
+fastapi==0.115.11
+kafka-python==2.1.1
+parameterized==0.9.0
+requests==2.32.3
+uvicorn==0.34.0
 https://github.com/hajle-silesia/common/zipball/master
-kafka-python-ng
