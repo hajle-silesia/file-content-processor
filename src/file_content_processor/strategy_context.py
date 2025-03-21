@@ -1,7 +1,4 @@
-import abc
-
-
-class StrategyContext(abc.ABC):
+class StrategyContext:
     def __init__(self, *strategies):
         self._strategies = strategies
 
