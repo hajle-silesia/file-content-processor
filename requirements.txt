@@ -1,4 +1,4 @@
-fastapi==0.115.13
+fastapi==0.115.14
 kafka-python==2.2.13
 parameterized==0.9.0
 requests==2.32.4
