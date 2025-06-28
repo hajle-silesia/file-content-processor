@@ -2,5 +2,5 @@ fastapi==0.115.14
 kafka-python==2.2.14
 parameterized==0.9.0
 requests==2.32.4
-uvicorn==0.34.3
+uvicorn==0.35.0
 https://github.com/hajle-silesia/common/zipball/master
